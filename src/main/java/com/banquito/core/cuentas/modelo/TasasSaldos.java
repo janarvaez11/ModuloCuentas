@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+
 @Entity
 @Table(name = "tasas_saldos")
 public class TasasSaldos {
@@ -25,14 +27,16 @@ public class TasasSaldos {
     @Column(name = "tasa", nullable = false, precision = 15, scale = 2)
     private BigDecimal tasa;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
     private Long version;
 
-    public TasasSaldos() {}
+    public TasasSaldos() {
+    }
 
     public TasasSaldos(Integer id) {
         this.id = id;
@@ -78,11 +82,11 @@ public class TasasSaldos {
         this.tasa = tasa;
     }
 
-    public String getEstado() {
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 
@@ -121,7 +125,9 @@ public class TasasSaldos {
 
     @Override
     public String toString() {
-        return "TasasSaldos [id=" + id + ", idTasaInteres=" + idTasaInteres + ", saldoMinimo=" + saldoMinimo + ", saldoMaximo=" + saldoMaximo + ", tasa=" + tasa + ", estado=" + estado + ", version=" + version + "]";
+        return "TasasSaldos [id=" + id + ", idTasaInteres=" + idTasaInteres + ", saldoMinimo=" + saldoMinimo
+                + ", saldoMaximo=" + saldoMaximo + ", tasa=" + tasa + ", estado=" + estado + ", version=" + version
+                + "]";
     }
 
 }

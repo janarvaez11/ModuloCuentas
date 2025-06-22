@@ -6,6 +6,11 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.banquito.core.cuentas.enums.BaseCalculoTasaEnum;
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+import com.banquito.core.cuentas.enums.FrecuenciaEnum;
+import com.banquito.core.cuentas.enums.MetodoCalculoTasaEnum;
+
 @Entity
 @Table(name = "tasas_intereses")
 public class TasasIntereses {
@@ -15,13 +20,13 @@ public class TasasIntereses {
     private Integer id;
 
     @Column(name = "base_calculo", nullable = false, length = 15)
-    private String baseCalculo;
+    private BaseCalculoTasaEnum baseCalculo;
 
     @Column(name = "metodo_calculo", nullable = false, length = 20)
-    private String metodoCalculo;
+    private MetodoCalculoTasaEnum metodoCalculo;
 
     @Column(name = "frecuencia_capitalizacion", nullable = false, length = 15)
-    private String frecuenciaCapitalizacion;
+    private FrecuenciaEnum frecuenciaCapitalizacion;
 
     @Column(name = "fecha_inicio_vigencia", nullable = false)
     private LocalDate fechaInicioVigencia;
@@ -29,8 +34,9 @@ public class TasasIntereses {
     @Column(name = "fecha_fin_vigencia", nullable = false)
     private LocalDate fechaFinVigencia;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
@@ -48,7 +54,8 @@ public class TasasIntereses {
     @OneToMany(mappedBy = "idTasaInteresPorDefecto")
     private Set<TiposCuentas> tiposCuentas = new LinkedHashSet<>();
 
-    public TasasIntereses() {}
+    public TasasIntereses() {
+    }
 
     public TasasIntereses(Integer id) {
         this.id = id;
@@ -62,27 +69,27 @@ public class TasasIntereses {
         this.id = id;
     }
 
-    public String getBaseCalculo() {
+    public BaseCalculoTasaEnum getBaseCalculo() {
         return baseCalculo;
     }
 
-    public void setBaseCalculo(String baseCalculo) {
+    public void setBaseCalculo(BaseCalculoTasaEnum baseCalculo) {
         this.baseCalculo = baseCalculo;
     }
 
-    public String getMetodoCalculo() {
+    public MetodoCalculoTasaEnum getMetodoCalculo() {
         return metodoCalculo;
     }
 
-    public void setMetodoCalculo(String metodoCalculo) {
+    public void setMetodoCalculo(MetodoCalculoTasaEnum metodoCalculo) {
         this.metodoCalculo = metodoCalculo;
     }
 
-    public String getFrecuenciaCapitalizacion() {
+    public FrecuenciaEnum getFrecuenciaCapitalizacion() {
         return frecuenciaCapitalizacion;
     }
 
-    public void setFrecuenciaCapitalizacion(String frecuenciaCapitalizacion) {
+    public void setFrecuenciaCapitalizacion(FrecuenciaEnum frecuenciaCapitalizacion) {
         this.frecuenciaCapitalizacion = frecuenciaCapitalizacion;
     }
 
@@ -102,11 +109,11 @@ public class TasasIntereses {
         this.fechaFinVigencia = fechaFinVigencia;
     }
 
-    public String getEstado() {
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 
@@ -177,7 +184,10 @@ public class TasasIntereses {
 
     @Override
     public String toString() {
-        return "TasasIntereses [id=" + id + ", baseCalculo=" + baseCalculo + ", metodoCalculo=" + metodoCalculo + ", frecuenciaCapitalizacion=" + frecuenciaCapitalizacion + ", fechaInicioVigencia=" + fechaInicioVigencia + ", fechaFinVigencia=" + fechaFinVigencia + ", estado=" + estado + ", version=" + version + "]";
+        return "TasasIntereses [id=" + id + ", baseCalculo=" + baseCalculo + ", metodoCalculo=" + metodoCalculo
+                + ", frecuenciaCapitalizacion=" + frecuenciaCapitalizacion + ", fechaInicioVigencia="
+                + fechaInicioVigencia + ", fechaFinVigencia=" + fechaFinVigencia + ", estado=" + estado + ", version="
+                + version + "]";
     }
 
 }

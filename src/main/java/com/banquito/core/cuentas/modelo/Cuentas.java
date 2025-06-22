@@ -6,6 +6,8 @@ import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+
 @Entity
 @Table(name = "cuentas")
 public class Cuentas {
@@ -37,8 +39,9 @@ public class Cuentas {
     @Column(name = "fecha_modificacion", nullable = false)
     private Instant fechaModificacion;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
@@ -53,7 +56,8 @@ public class Cuentas {
     @OneToMany(mappedBy = "idCuenta")
     private Set<ServiciosAsociadosCuentas> serviciosAsociadosCuentas = new LinkedHashSet<>();
 
-    public Cuentas() {}
+    public Cuentas() {
+    }
 
     public Cuentas(Integer id) {
         this.id = id;
@@ -123,11 +127,11 @@ public class Cuentas {
         this.fechaModificacion = fechaModificacion;
     }
 
-    public String getEstado() {
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 
@@ -190,7 +194,10 @@ public class Cuentas {
 
     @Override
     public String toString() {
-        return "Cuentas [id=" + id + ", idTipoCuenta=" + idTipoCuenta + ", idTasaInteres=" + idTasaInteres + ", codigoCuenta=" + codigoCuenta + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fechaCreacion=" + fechaCreacion + ", fechaModificacion=" + fechaModificacion + ", estado=" + estado + ", version=" + version + "]";
+        return "Cuentas [id=" + id + ", idTipoCuenta=" + idTipoCuenta + ", idTasaInteres=" + idTasaInteres
+                + ", codigoCuenta=" + codigoCuenta + ", nombre=" + nombre + ", descripcion=" + descripcion
+                + ", fechaCreacion=" + fechaCreacion + ", fechaModificacion=" + fechaModificacion + ", estado=" + estado
+                + ", version=" + version + "]";
     }
 
 }

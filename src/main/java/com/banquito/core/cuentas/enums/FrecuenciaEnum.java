@@ -1,12 +1,14 @@
 package com.banquito.core.cuentas.enums;
 
-public enum EstadoGeneralEnum {
-    ACTIVO("ACTIVO"),
-    INACTIVO("INACTIVO");
+public enum FrecuenciaEnum {
+    DIARIA("DIARIA"),
+    MENSUAL("MENSUAL"),
+    TRIMESTRAL("TRIMESTRAL"),
+    ANUAL("ANUAL");
 
     private final String valor;
 
-    EstadoGeneralEnum(String valor) {
+    FrecuenciaEnum(String valor) {
         this.valor = valor;
     }
 

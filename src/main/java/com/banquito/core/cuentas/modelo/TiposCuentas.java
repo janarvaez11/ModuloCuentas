@@ -7,6 +7,9 @@ import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+import com.banquito.core.cuentas.enums.TipoClienteEnum;
+
 @Entity
 @Table(name = "tipos_cuentas")
 public class TiposCuentas {
@@ -37,7 +40,7 @@ public class TiposCuentas {
     private String requisitosApertura;
 
     @Column(name = "tipo_cliente", nullable = false, length = 15)
-    private String tipoCliente;
+    private TipoClienteEnum tipoCliente;
 
     @Column(name = "fecha_creacion", nullable = false)
     private Instant fechaCreacion;
@@ -45,8 +48,9 @@ public class TiposCuentas {
     @Column(name = "fecha_modificacion", nullable = false)
     private Instant fechaModificacion;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
@@ -103,11 +107,11 @@ public class TiposCuentas {
         this.requisitosApertura = requisitosApertura;
     }
 
-    public String getTipoCliente() {
+    public TipoClienteEnum getTipoCliente() {
         return tipoCliente;
     }
 
-    public void setTipoCliente(String tipoCliente) {
+    public void setTipoCliente(TipoClienteEnum tipoCliente) {
         this.tipoCliente = tipoCliente;
     }
 
@@ -127,11 +131,11 @@ public class TiposCuentas {
         this.fechaModificacion = fechaModificacion;
     }
 
-    public String getEstado() {
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+
 @Entity
 @Table(name = "servicios_asociados")
 public class ServiciosAsociados {
@@ -19,8 +21,9 @@ public class ServiciosAsociados {
     @Column(name = "descripcion", length = 150)
     private String descripcion;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
@@ -32,7 +35,8 @@ public class ServiciosAsociados {
     @OneToMany(mappedBy = "idServicio")
     private Set<ServiciosAsociadosCuentas> serviciosAsociadosCuentas = new LinkedHashSet<>();
 
-    public ServiciosAsociados() {}
+    public ServiciosAsociados() {
+    }
 
     public ServiciosAsociados(Integer id) {
         this.id = id;
@@ -62,11 +66,11 @@ public class ServiciosAsociados {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 
@@ -117,6 +121,13 @@ public class ServiciosAsociados {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ServiciosAsociados [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", estado="
+                + estado + ", version=" + version + ", comisionesCargos=" + comisionesCargos
+                + ", serviciosAsociadosCuentas=" + serviciosAsociadosCuentas + "]";
     }
 
 }

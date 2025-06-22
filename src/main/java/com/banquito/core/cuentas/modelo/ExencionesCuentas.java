@@ -1,5 +1,7 @@
 package com.banquito.core.cuentas.modelo;
 
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+
 import jakarta.persistence.*;
 
 
@@ -21,8 +23,9 @@ public class ExencionesCuentas {
     @Column(name = "descripcion", length = 150)
     private String descripcion;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
@@ -66,11 +69,11 @@ public class ExencionesCuentas {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
+
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
-
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 

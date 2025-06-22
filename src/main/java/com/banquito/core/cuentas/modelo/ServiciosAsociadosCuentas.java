@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.time.Instant;
 
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+
 @Entity
 @Table(name = "servicios_asociados_cuentas")
 public class ServiciosAsociadosCuentas {
@@ -23,14 +25,16 @@ public class ServiciosAsociadosCuentas {
     @Column(name = "fecha_asignacion", nullable = false)
     private Instant fechaAsignacion;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
     private Long version;
 
-    public ServiciosAsociadosCuentas() {}
+    public ServiciosAsociadosCuentas() {
+    }
 
     public ServiciosAsociadosCuentas(Integer id) {
         this.id = id;
@@ -68,11 +72,11 @@ public class ServiciosAsociadosCuentas {
         this.fechaAsignacion = fechaAsignacion;
     }
 
-    public String getEstado() {
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 
@@ -111,7 +115,8 @@ public class ServiciosAsociadosCuentas {
 
     @Override
     public String toString() {
-        return "ServiciosAsociadosCuentas [id=" + id + ", idServicio=" + idServicio + ", idCuenta=" + idCuenta + ", fechaAsignacion=" + fechaAsignacion + ", estado=" + estado + ", version=" + version + "]";
+        return "ServiciosAsociadosCuentas [id=" + id + ", idServicio=" + idServicio + ", idCuenta=" + idCuenta
+                + ", fechaAsignacion=" + fechaAsignacion + ", estado=" + estado + ", version=" + version + "]";
     }
 
 }

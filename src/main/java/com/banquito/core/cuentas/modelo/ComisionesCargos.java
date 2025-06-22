@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.banquito.core.cuentas.enums.BaseCalculoComisionEnum;
+import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
+import com.banquito.core.cuentas.enums.TipoComisionEnum;
+
 @Entity
 @Table(name = "comisiones_cargos")
 public class ComisionesCargos {
@@ -14,7 +18,7 @@ public class ComisionesCargos {
     private Integer id;
 
     @Column(name = "tipo_comision", nullable = false, length = 25)
-    private String tipoComision;
+    private TipoComisionEnum tipoComision;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_servicio", nullable = false)
@@ -24,7 +28,7 @@ public class ComisionesCargos {
     private String nombre;
 
     @Column(name = "base_calculo", nullable = false, length = 15)
-    private String baseCalculo;
+    private BaseCalculoComisionEnum baseCalculo;
 
     @Column(name = "monto", nullable = false, precision = 15, scale = 2)
     private BigDecimal monto;
@@ -32,8 +36,9 @@ public class ComisionesCargos {
     @Column(name = "frecuencia", nullable = false, length = 15)
     private String frecuencia;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoGeneralCuentasEnum estado = EstadoGeneralCuentasEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
@@ -45,7 +50,8 @@ public class ComisionesCargos {
     @OneToMany(mappedBy = "idComision")
     private Set<ExencionesCuentas> exencionesCuentas = new LinkedHashSet<>();
 
-    public ComisionesCargos() {}
+    public ComisionesCargos() {
+    }
 
     public ComisionesCargos(Integer id) {
         this.id = id;
@@ -59,11 +65,11 @@ public class ComisionesCargos {
         this.id = id;
     }
 
-    public String getTipoComision() {
+    public TipoComisionEnum getTipoComision() {
         return tipoComision;
     }
 
-    public void setTipoComision(String tipoComision) {
+    public void setTipoComision(TipoComisionEnum tipoComision) {
         this.tipoComision = tipoComision;
     }
 
@@ -83,11 +89,11 @@ public class ComisionesCargos {
         this.nombre = nombre;
     }
 
-    public String getBaseCalculo() {
+    public BaseCalculoComisionEnum getBaseCalculo() {
         return baseCalculo;
     }
 
-    public void setBaseCalculo(String baseCalculo) {
+    public void setBaseCalculo(BaseCalculoComisionEnum baseCalculo) {
         this.baseCalculo = baseCalculo;
     }
 
@@ -107,11 +113,11 @@ public class ComisionesCargos {
         this.frecuencia = frecuencia;
     }
 
-    public String getEstado() {
+    public EstadoGeneralCuentasEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoGeneralCuentasEnum estado) {
         this.estado = estado;
     }
 
@@ -166,7 +172,9 @@ public class ComisionesCargos {
 
     @Override
     public String toString() {
-        return "ComisionesCargos [id=" + id + ", tipoComision=" + tipoComision + ", idServicio=" + idServicio + ", nombre=" + nombre + ", baseCalculo=" + baseCalculo + ", monto=" + monto + ", frecuencia=" + frecuencia + ", estado=" + estado + ", version=" + version + "]";
+        return "ComisionesCargos [id=" + id + ", tipoComision=" + tipoComision + ", idServicio=" + idServicio
+                + ", nombre=" + nombre + ", baseCalculo=" + baseCalculo + ", monto=" + monto + ", frecuencia="
+                + frecuencia + ", estado=" + estado + ", version=" + version + "]";
     }
 
 }

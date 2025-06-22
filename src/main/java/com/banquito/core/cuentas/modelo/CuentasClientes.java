@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import com.banquito.core.cuentas.enums.EstadoCuentaClienteEnum;
+
 @Entity
 @Table(name = "cuentas_clientes")
 public class CuentasClientes {
@@ -38,8 +40,9 @@ public class CuentasClientes {
     @Column(name = "fecha_apertura", nullable = false)
     private Instant fechaApertura;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private EstadoCuentaClienteEnum estado = EstadoCuentaClienteEnum.ACTIVO;
 
     @Version
     @Column(name = "version", nullable = false)
@@ -108,11 +111,11 @@ public class CuentasClientes {
         this.fechaApertura = fechaApertura;
     }
 
-    public String getEstado() {
+    public EstadoCuentaClienteEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoCuentaClienteEnum estado) {
         this.estado = estado;
     }
 
