@@ -1,6 +1,5 @@
 package com.banquito.core.cuentas.modelo;
 
-//import com.banquito.core.clientes.modelo.Clientes;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -9,7 +8,7 @@ import java.time.Instant;
 import com.banquito.core.cuentas.enums.EstadoCuentaClienteEnum;
 
 @Entity
-@Table(name = "cuentas_clientes")
+@Table(name = "cuentas_clientes", schema = "cuentas")
 public class CuentasClientes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +21,7 @@ public class CuentasClientes {
 
     @Column(name = "id_cliente", nullable = false)
     private Integer idCliente; // Assuming this is an Integer ID for Clientes, not a full entity reference
-    /*
-     * @ManyToOne(fetch = FetchType.LAZY)
-     * 
-     * @JoinColumn(name = "id_cliente", nullable = false)
-     * private Clientes idCliente;
-     */
+
     @Column(name = "numero_cuenta", nullable = false, length = 10)
     private String numeroCuenta;
 

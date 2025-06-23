@@ -9,7 +9,7 @@ import java.util.Set;
 import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
 
 @Entity
-@Table(name = "cuentas")
+@Table(name = "cuentas", schema = "cuentas")
 public class Cuentas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

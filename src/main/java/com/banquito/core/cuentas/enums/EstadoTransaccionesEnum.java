@@ -1,6 +1,7 @@
 package com.banquito.core.cuentas.enums;
 
 public enum EstadoTransaccionesEnum {
+    ACTIVO("ACTIVO"),
     PROCESADO("PROCESADO"),
     PENDIENTE("PENDIENTE"),
     RECHAZADO("RECHAZADO"),;

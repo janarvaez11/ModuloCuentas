@@ -6,25 +6,29 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+
 import com.banquito.core.cuentas.enums.BaseCalculoTasaEnum;
 import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
 import com.banquito.core.cuentas.enums.FrecuenciaEnum;
 import com.banquito.core.cuentas.enums.MetodoCalculoTasaEnum;
 
 @Entity
-@Table(name = "tasas_intereses")
+@Table(name = "tasas_intereses", schema = "cuentas")
 public class TasasIntereses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tasa_interes", nullable = false)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "base_calculo", nullable = false, length = 15)
     private BaseCalculoTasaEnum baseCalculo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "metodo_calculo", nullable = false, length = 20)
     private MetodoCalculoTasaEnum metodoCalculo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "frecuencia_capitalizacion", nullable = false, length = 15)
     private FrecuenciaEnum frecuenciaCapitalizacion;
 

@@ -10,6 +10,11 @@ public enum BaseCalculoTasaEnum {
         this.valor = valor;
     }
 
+    @Override
+    public String toString() {
+        return valor;
+    }
+    
     public String getValor() {
         return valor;
     }

@@ -7,7 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import com.banquito.core.cuentas.enums.EstadoEspecificoTransaccionEnum;
 
 @Entity
-@Table(name = "transferencias")
+@Table(name = "transferencias", schema = "cuentas")
 public class Transferencias {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
