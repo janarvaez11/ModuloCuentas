@@ -36,23 +36,14 @@ public class TransaccionesServicio {
         this.transferenciasRepositorio = transferenciasRepositorio;
     }
 
-    /**
-     * Busca una transacción por su ID. No usa Optional.
-     * @param id El ID de la transacción a buscar.
-     * @return La entidad Transacciones encontrada.
-     * @throws EntidadNoEncontradaExcepcion Si la transacción no se encuentra.
-     */
+
     public Transacciones buscarPorId(Integer id) {
         log.debug("Iniciando búsqueda de Transacciones con ID: {}", id);
         return transaccionesRepositorio.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaExcepcion("Transacciones", "Transacción con ID " + id + " no encontrada."));
     }
 
-    /**
-     * Lista todas las transacciones de una cuenta cliente específica, ordenadas por fecha.
-     * @param idCuentaCliente El ID de la cuenta cliente.
-     * @return Una lista de Transacciones. Puede ser vacía si no hay transacciones.
-     */
+
     public List<Transacciones> buscarPorIdCuentaCliente(Integer idCuentaCliente) {
         log.debug("Iniciando búsqueda de Transacciones para idCuentaCliente: {}", idCuentaCliente);
         List<Transacciones> transacciones = transaccionesRepositorio.findByIdCuentaCliente_IdOrderByFechaTransaccionDesc(idCuentaCliente);
@@ -62,13 +53,7 @@ public class TransaccionesServicio {
         return transacciones;
     }
 
-    /**
-     * Lista transacciones de una cuenta cliente en un rango de fechas.
-     * @param idCuentaCliente El ID de la cuenta cliente.
-     * @param fechaInicio La fecha de inicio del rango.
-     * @param fechaFin La fecha de fin del rango.
-     * @return Una lista de Transacciones. Puede ser vacía.
-     */
+
     public List<Transacciones> buscarPorIdCuentaClienteYFechas(Integer idCuentaCliente, Instant fechaInicio, Instant fechaFin) {
         log.debug("Iniciando búsqueda de Transacciones para idCuentaCliente: {} entre {} y {}", idCuentaCliente, fechaInicio, fechaFin);
         List<Transacciones> transacciones = transaccionesRepositorio.findByIdCuentaCliente_IdAndFechaTransaccionBetweenOrderByFechaTransaccionDesc(idCuentaCliente, fechaInicio, fechaFin);
@@ -78,13 +63,7 @@ public class TransaccionesServicio {
         return transacciones;
     }
 
-    /**
-     * Realiza un depósito en una cuenta cliente.
-     * @param transaccion La transacción de depósito a registrar.
-     * @return La transacción de depósito creada.
-     * @throws CrearEntidadExcepcion Si ocurre un error al crear la transacción o actualizar el saldo.
-     * @throws EntidadNoEncontradaExcepcion Si la cuenta cliente no existe.
-     */
+
     @Transactional
     public Transacciones realizarDeposito(Transacciones transaccion) {
         log.info("Iniciando depósito de {} en cuenta cliente ID {}", transaccion.getMonto(), transaccion.getIdCuentaCliente().getId());
@@ -126,13 +105,7 @@ public class TransaccionesServicio {
         }
     }
 
-    /**
-     * Realiza un retiro de una cuenta cliente.
-     * @param transaccion La transacción de retiro a registrar.
-     * @return La transacción de retiro creada.
-     * @throws CrearEntidadExcepcion Si ocurre un error, saldo insuficiente o cuenta inactiva.
-     * @throws EntidadNoEncontradaExcepcion Si la cuenta cliente no existe.
-     */
+
     @Transactional
     public Transacciones realizarRetiro(Transacciones transaccion) {
         log.info("Iniciando retiro de {} de cuenta cliente ID {}", transaccion.getMonto(), transaccion.getIdCuentaCliente().getId());
@@ -179,17 +152,7 @@ public class TransaccionesServicio {
         }
     }
 
-    /**
-     * Realiza una transferencia entre dos cuentas cliente.
-     * Esta operación crea dos transacciones (una de débito en origen, una de crédito en destino)
-     * y un registro de Transferencias detallado.
-     * @param idCuentaClienteOrigen ID de la cuenta cliente origen.
-     * @param idCuentaClienteDestino ID de la cuenta cliente destino.
-     * @param monto El monto a transferir.
-     * @param descripcion La descripción de la transferencia.
-     * @return La transacción de origen creada.
-     * @throws CrearEntidadExcepcion Si ocurre un error, saldo insuficiente, o cuentas inactivas/no encontradas.
-     */
+
     @Transactional
     public Transacciones realizarTransferencia(Integer idCuentaClienteOrigen, Integer idCuentaClienteDestino, BigDecimal monto, String descripcion) {
         log.info("Iniciando transferencia de {} desde cuenta ID {} a cuenta ID {}", monto, idCuentaClienteOrigen, idCuentaClienteDestino);
