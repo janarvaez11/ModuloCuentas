@@ -26,7 +26,7 @@ public class TransaccionesServicio {
 
     private final TransaccionesRepositorio transaccionesRepositorio;
     private final CuentasClientesRepositorio cuentasClientesRepositorio;
-    private final TransferenciasRepositorio transferenciasRepositorio; // Para gestionar detalles de transferencias
+    private final TransferenciasRepositorio transferenciasRepositorio; 
 
     public TransaccionesServicio(TransaccionesRepositorio transaccionesRepositorio,
                                  CuentasClientesRepositorio cuentasClientesRepositorio,
@@ -68,7 +68,6 @@ public class TransaccionesServicio {
     public Transacciones realizarDeposito(Transacciones transaccion) {
         log.info("Iniciando depósito de {} en cuenta cliente ID {}", transaccion.getMonto(), transaccion.getIdCuentaCliente().getId());
 
-        // Asegurarse de que el tipo de transacción sea DEPOSITO
         if (transaccion.getTipoTransaccion() != TipoTransaccionEnum.DEPOSITO) {
             throw new CrearEntidadExcepcion("Transacciones", "El tipo de transacción debe ser DEPOSITO para esta operación.");
         }
@@ -76,25 +75,21 @@ public class TransaccionesServicio {
         CuentasClientes cuentaCliente = cuentasClientesRepositorio.findById(transaccion.getIdCuentaCliente().getId())
                 .orElseThrow(() -> new EntidadNoEncontradaExcepcion("CuentasClientes", "Cuenta Cliente con ID " + transaccion.getIdCuentaCliente().getId() + " no encontrada."));
 
-        // **CORRECCIÓN:** Usar EstadoCuentaClienteEnum para el estado de la cuenta.
         if (cuentaCliente.getEstado() != EstadoCuentaClienteEnum.ACTIVO) {
              throw new CrearEntidadExcepcion("Transacciones", "La cuenta cliente no está activa para realizar depósitos.");
         }
 
-        // Actualizar saldo de la cuenta
         BigDecimal nuevoSaldoDisponible = cuentaCliente.getSaldoDisponible().add(transaccion.getMonto());
         BigDecimal nuevoSaldoContable = cuentaCliente.getSaldoContable().add(transaccion.getMonto());
         cuentaCliente.setSaldoDisponible(nuevoSaldoDisponible);
         cuentaCliente.setSaldoContable(nuevoSaldoContable);
 
         try {
-            cuentasClientesRepositorio.save(cuentaCliente); // Persistir el cambio de saldo
-
-            // Registrar la transacción
-            transaccion.setIdCuentaCliente(cuentaCliente); // Asegurar que la referencia es a la entidad gestionada
+            cuentasClientesRepositorio.save(cuentaCliente); 
+            transaccion.setIdCuentaCliente(cuentaCliente);
             transaccion.setFechaTransaccion(Instant.now());
-            transaccion.setEstado(EstadoTransaccionesEnum.PROCESADO); // **CORRECCIÓN:** Usar PROCESADO
-            transaccion.setVersion(0L); // Versión inicial
+            transaccion.setEstado(EstadoTransaccionesEnum.PROCESADO); 
+            transaccion.setVersion(0L); 
 
             Transacciones transaccionCreada = transaccionesRepositorio.save(transaccion);
             log.info("Depósito de {} en cuenta cliente ID {} completado exitosamente. Nuevo saldo: {}", transaccion.getMonto(), cuentaCliente.getId(), nuevoSaldoDisponible);
@@ -110,7 +105,6 @@ public class TransaccionesServicio {
     public Transacciones realizarRetiro(Transacciones transaccion) {
         log.info("Iniciando retiro de {} de cuenta cliente ID {}", transaccion.getMonto(), transaccion.getIdCuentaCliente().getId());
 
-        // Asegurarse de que el tipo de transacción sea RETIRO
         if (transaccion.getTipoTransaccion() != TipoTransaccionEnum.RETIRO) {
             throw new CrearEntidadExcepcion("Transacciones", "El tipo de transacción debe ser RETIRO para esta operación.");
         }
@@ -118,30 +112,26 @@ public class TransaccionesServicio {
         CuentasClientes cuentaCliente = cuentasClientesRepositorio.findById(transaccion.getIdCuentaCliente().getId())
                 .orElseThrow(() -> new EntidadNoEncontradaExcepcion("CuentasClientes", "Cuenta Cliente con ID " + transaccion.getIdCuentaCliente().getId() + " no encontrada."));
 
-        // **CORRECCIÓN:** Usar EstadoCuentaClienteEnum para el estado de la cuenta.
         if (cuentaCliente.getEstado() != EstadoCuentaClienteEnum.ACTIVO) {
             throw new CrearEntidadExcepcion("Transacciones", "La cuenta cliente no está activa para realizar retiros.");
         }
 
-        // Verificar saldo disponible
         if (cuentaCliente.getSaldoDisponible().compareTo(transaccion.getMonto()) < 0) {
             throw new CrearEntidadExcepcion("Transacciones", "Saldo insuficiente en la cuenta cliente " + cuentaCliente.getNumeroCuenta() + " para realizar el retiro.");
         }
 
-        // Actualizar saldo de la cuenta
         BigDecimal nuevoSaldoDisponible = cuentaCliente.getSaldoDisponible().subtract(transaccion.getMonto());
         BigDecimal nuevoSaldoContable = cuentaCliente.getSaldoContable().subtract(transaccion.getMonto());
         cuentaCliente.setSaldoDisponible(nuevoSaldoDisponible);
         cuentaCliente.setSaldoContable(nuevoSaldoContable);
 
         try {
-            cuentasClientesRepositorio.save(cuentaCliente); // Persistir el cambio de saldo
+            cuentasClientesRepositorio.save(cuentaCliente); 
 
-            // Registrar la transacción
-            transaccion.setIdCuentaCliente(cuentaCliente); // Asegurar que la referencia es a la entidad gestionada
+            transaccion.setIdCuentaCliente(cuentaCliente); 
             transaccion.setFechaTransaccion(Instant.now());
-            transaccion.setEstado(EstadoTransaccionesEnum.PROCESADO); // **CORRECCIÓN:** Usar PROCESADO
-            transaccion.setVersion(0L); // Versión inicial
+            transaccion.setEstado(EstadoTransaccionesEnum.PROCESADO); 
+            transaccion.setVersion(0L); 
 
             Transacciones transaccionCreada = transaccionesRepositorio.save(transaccion);
             log.info("Retiro de {} de cuenta cliente ID {} completado exitosamente. Nuevo saldo: {}", transaccion.getMonto(), cuentaCliente.getId(), nuevoSaldoDisponible);
@@ -167,65 +157,57 @@ public class TransaccionesServicio {
         CuentasClientes cuentaDestino = cuentasClientesRepositorio.findById(idCuentaClienteDestino)
                 .orElseThrow(() -> new EntidadNoEncontradaExcepcion("CuentasClientes", "Cuenta Cliente Destino con ID " + idCuentaClienteDestino + " no encontrada."));
 
-        // **CORRECCIÓN:** Usar EstadoCuentaClienteEnum para el estado de la cuenta.
         if (cuentaOrigen.getEstado() != EstadoCuentaClienteEnum.ACTIVO) {
             throw new CrearEntidadExcepcion("Transferencias", "La cuenta cliente origen no está activa para realizar transferencias.");
         }
-        // **CORRECCIÓN:** Usar EstadoCuentaClienteEnum para el estado de la cuenta.
         if (cuentaDestino.getEstado() != EstadoCuentaClienteEnum.ACTIVO) {
             throw new CrearEntidadExcepcion("Transferencias", "La cuenta cliente destino no está activa para recibir transferencias.");
         }
 
-        // Verificar saldo disponible en la cuenta origen
         if (cuentaOrigen.getSaldoDisponible().compareTo(monto) < 0) {
             throw new CrearEntidadExcepcion("Transferencias", "Saldo insuficiente en la cuenta origen " + cuentaOrigen.getNumeroCuenta() + " para realizar la transferencia.");
         }
 
         try {
-            // 1. Crear Transacción de DÉBITO en la cuenta origen
             Transacciones transaccionOrigen = new Transacciones();
             transaccionOrigen.setIdCuentaCliente(cuentaOrigen);
-            transaccionOrigen.setTipoTransaccion(TipoTransaccionEnum.TRANSFERENCIA); // El tipo es TRANSFERENCIA
-            transaccionOrigen.setMonto(monto.negate()); // Monto negativo para débito
+            transaccionOrigen.setTipoTransaccion(TipoTransaccionEnum.TRANSFERENCIA); 
+            transaccionOrigen.setMonto(monto.negate()); 
             transaccionOrigen.setDescripcion("Transferencia saliente a " + cuentaDestino.getNumeroCuenta() + ": " + descripcion);
             transaccionOrigen.setFechaTransaccion(Instant.now());
-            transaccionOrigen.setEstado(EstadoTransaccionesEnum.PROCESADO); // **CORRECCIÓN:** Usar PROCESADO
+            transaccionOrigen.setEstado(EstadoTransaccionesEnum.PROCESADO);
             transaccionOrigen.setVersion(0L);
             Transacciones transaccionOrigenGuardada = transaccionesRepositorio.save(transaccionOrigen);
 
-            // 2. Actualizar saldo en la cuenta origen
             cuentaOrigen.setSaldoDisponible(cuentaOrigen.getSaldoDisponible().subtract(monto));
             cuentaOrigen.setSaldoContable(cuentaOrigen.getSaldoContable().subtract(monto));
             cuentasClientesRepositorio.save(cuentaOrigen);
 
-            // 3. Crear Transacción de CRÉDITO en la cuenta destino
             Transacciones transaccionDestino = new Transacciones();
             transaccionDestino.setIdCuentaCliente(cuentaDestino);
-            transaccionDestino.setTipoTransaccion(TipoTransaccionEnum.TRANSFERENCIA); // El tipo es TRANSFERENCIA
-            transaccionDestino.setMonto(monto); // Monto positivo para crédito
+            transaccionDestino.setTipoTransaccion(TipoTransaccionEnum.TRANSFERENCIA); 
+            transaccionDestino.setMonto(monto); 
             transaccionDestino.setDescripcion("Transferencia entrante de " + cuentaOrigen.getNumeroCuenta() + ": " + descripcion);
             transaccionDestino.setFechaTransaccion(Instant.now());
-            transaccionDestino.setEstado(EstadoTransaccionesEnum.PROCESADO); // **CORRECCIÓN:** Usar PROCESADO
+            transaccionDestino.setEstado(EstadoTransaccionesEnum.PROCESADO); 
             transaccionDestino.setVersion(0L);
-            // **CORRECCIÓN:** Ya no se asigna a una variable local si no se usa después.
+          
             transaccionesRepositorio.save(transaccionDestino);
 
 
-            // 4. Registrar el detalle de la Transferencia
             Transferencias detalleTransferencia = new Transferencias();
-            detalleTransferencia.setIdTransaccion(transaccionOrigenGuardada); // La referencia es a la transacción de origen
+            detalleTransferencia.setIdTransaccion(transaccionOrigenGuardada); 
             detalleTransferencia.setIdCuentaClienteDestino(cuentaDestino);
             detalleTransferencia.setEstado(EstadoEspecificoTransaccionEnum.ENVIADO);
             detalleTransferencia.setVersion(0L);
             transferenciasRepositorio.save(detalleTransferencia);
 
-            // 5. Actualizar saldo en la cuenta destino
             cuentaDestino.setSaldoDisponible(cuentaDestino.getSaldoDisponible().add(monto));
             cuentaDestino.setSaldoContable(cuentaDestino.getSaldoContable().add(monto));
             cuentasClientesRepositorio.save(cuentaDestino);
 
             log.info("Transferencia de {} de cuenta ID {} a cuenta ID {} completada exitosamente.", monto, idCuentaClienteOrigen, idCuentaClienteDestino);
-            return transaccionOrigenGuardada; // Retorna la transacción de origen como confirmación
+            return transaccionOrigenGuardada; 
         } catch (Exception e) {
             log.error("Error al realizar transferencia de {} de cuenta ID {} a cuenta ID {}: {}", monto, idCuentaClienteOrigen, idCuentaClienteDestino, e.getMessage(), e);
             throw new CrearEntidadExcepcion("Transferencias", "No se pudo realizar la transferencia. Detalle: " + e.getMessage());
