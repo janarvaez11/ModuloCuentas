@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "transacciones")
+@Table(name = "transacciones", schema = "cuentas")
 public class Transacciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,7 @@ public class Transacciones {
     @JoinColumn(name = "id_cuenta_cliente")
     private CuentasClientes idCuentaCliente;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_transaccion", nullable = false, length = 20)
     private TipoTransaccionEnum tipoTransaccion;
 

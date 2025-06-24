@@ -11,7 +11,7 @@ import com.banquito.core.cuentas.enums.EstadoGeneralCuentasEnum;
 import com.banquito.core.cuentas.enums.TipoClienteEnum;
 
 @Entity
-@Table(name = "tipos_cuentas")
+@Table(name = "tipos_cuentas", schema = "cuentas")
 public class TiposCuentas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +20,7 @@ public class TiposCuentas {
 
     @Column(name = "id_moneda", nullable = false)
     private String idMoneda; // Assuming this is an Integer ID for Monedas, not a full entity reference
-    /*
-     * @ManyToOne(fetch = FetchType.LAZY)
-     * 
-     * @JoinColumn(name = "id_moneda", nullable = false)
-     * private Monedas idMoneda;
-     */
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tasa_interes_por_defecto", nullable = false)
     private TasasIntereses idTasaInteresPorDefecto;
@@ -39,6 +34,7 @@ public class TiposCuentas {
     @Column(name = "requisitos_apertura", nullable = false, length = 300)
     private String requisitosApertura;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cliente", nullable = false, length = 15)
     private TipoClienteEnum tipoCliente;
 
@@ -58,6 +54,13 @@ public class TiposCuentas {
 
     @OneToMany(mappedBy = "idTipoCuenta")
     private Set<Cuentas> cuentas = new LinkedHashSet<>();
+
+    public TiposCuentas() {
+        // Default constructor
+    }
+    public TiposCuentas(Integer id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;

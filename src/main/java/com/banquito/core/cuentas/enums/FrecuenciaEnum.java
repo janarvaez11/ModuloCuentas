@@ -3,7 +3,7 @@ package com.banquito.core.cuentas.enums;
 public enum FrecuenciaEnum {
     DIARIA("DIARIA"),
     MENSUAL("MENSUAL"),
-    TRIMESTRAL("TRIMESTRAL"),
+    SEMESTRAL("SEMESTRAL"),
     ANUAL("ANUAL");
 
     private final String valor;
