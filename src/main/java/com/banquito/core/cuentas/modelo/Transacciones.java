@@ -47,12 +47,6 @@ public class Transacciones {
     private Long version;
 
     @OneToMany(mappedBy = "idTransaccion")
-    private Set<PagosCheques> pagosCheques = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idTransaccion")
-    private Set<PagosTarjetaDebito> pagosTarjetaDebitos = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idTransaccion")
     private Set<Transferencias> transferencias = new LinkedHashSet<>();
 
     public Transacciones() {
@@ -126,22 +120,6 @@ public class Transacciones {
         this.version = version;
     }
 
-    public Set<PagosCheques> getPagosCheques() {
-        return pagosCheques;
-    }
-
-    public void setPagosCheques(Set<PagosCheques> pagosCheques) {
-        this.pagosCheques = pagosCheques;
-    }
-
-    public Set<PagosTarjetaDebito> getPagosTarjetaDebitos() {
-        return pagosTarjetaDebitos;
-    }
-
-    public void setPagosTarjetaDebitos(Set<PagosTarjetaDebito> pagosTarjetaDebitos) {
-        this.pagosTarjetaDebitos = pagosTarjetaDebitos;
-    }
-
     public Set<Transferencias> getTransferencias() {
         return transferencias;
     }
@@ -179,8 +157,10 @@ public class Transacciones {
     public String toString() {
         return "Transacciones [id=" + id + ", idCuentaCliente=" + idCuentaCliente + ", tipoTransaccion="
                 + tipoTransaccion + ", monto=" + monto + ", descripcion=" + descripcion + ", fechaTransaccion="
-                + fechaTransaccion + ", estado=" + estado + ", version=" + version + ", pagosCheques=" + pagosCheques
-                + ", pagosTarjetaDebitos=" + pagosTarjetaDebitos + ", transferencias=" + transferencias + "]";
+                + fechaTransaccion + ", estado=" + estado + ", version=" + version + ", transferencias="
+                + transferencias + "]";
     }
+
+
 
 }
