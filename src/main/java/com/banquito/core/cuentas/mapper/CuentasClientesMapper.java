@@ -1,8 +1,8 @@
 package com.banquito.core.cuentas.mapper;
 
-import com.banquito.core.cuentas.DTO.CuentaRespuestaDTO_Min2;
-import com.banquito.core.cuentas.DTO.CuentasClientesSolicitudDTO;
-import com.banquito.core.cuentas.DTO.CuentasClientesRespuestaDTO;
+import com.banquito.core.cuentas.dto.CuentaRespuestaDTO_Min2;
+import com.banquito.core.cuentas.dto.CuentasClientesRespuestaDTO;
+import com.banquito.core.cuentas.dto.CuentasClientesSolicitudDTO;
 import com.banquito.core.cuentas.modelo.Cuentas;
 import com.banquito.core.cuentas.modelo.CuentasClientes;
 

@@ -1,7 +1,7 @@
 package com.banquito.core.cuentas.mapper;
 
-import com.banquito.core.cuentas.DTO.TipoCuentaSolicitudDTO;
-import com.banquito.core.cuentas.DTO.TipoCuentaRespuestaDTO;
+import com.banquito.core.cuentas.dto.TipoCuentaRespuestaDTO;
+import com.banquito.core.cuentas.dto.TipoCuentaSolicitudDTO;
 import com.banquito.core.cuentas.modelo.TasasIntereses;
 import com.banquito.core.cuentas.modelo.TiposCuentas;
 
