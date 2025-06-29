@@ -1,7 +1,7 @@
 package com.banquito.core.cuentas.controlador;
 
-import com.banquito.core.cuentas.DTO.TipoCuentaSolicitudDTO;
-import com.banquito.core.cuentas.DTO.TipoCuentaRespuestaDTO;
+import com.banquito.core.cuentas.dto.TipoCuentaRespuestaDTO;
+import com.banquito.core.cuentas.dto.TipoCuentaSolicitudDTO;
 import com.banquito.core.cuentas.excepcion.ActualizarEntidadExcepcion;
 import com.banquito.core.cuentas.excepcion.CrearEntidadExcepcion;
 import com.banquito.core.cuentas.excepcion.EntidadNoEncontradaExcepcion;

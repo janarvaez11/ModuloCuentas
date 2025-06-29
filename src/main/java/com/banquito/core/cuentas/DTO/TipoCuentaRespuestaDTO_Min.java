@@ -1,4 +1,4 @@
-package com.banquito.core.cuentas.DTO;
+package com.banquito.core.cuentas.dto;
 
 import lombok.Builder;
 import lombok.Data;

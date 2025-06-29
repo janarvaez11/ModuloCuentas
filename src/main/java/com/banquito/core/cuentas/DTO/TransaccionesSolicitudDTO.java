@@ -1,4 +1,4 @@
-package com.banquito.core.cuentas.DTO;
+package com.banquito.core.cuentas.dto;
 
 import com.banquito.core.cuentas.enums.TipoTransaccionEnum;
 import jakarta.validation.constraints.DecimalMin;

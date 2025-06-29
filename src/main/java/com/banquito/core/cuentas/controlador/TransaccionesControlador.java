@@ -1,8 +1,8 @@
 package com.banquito.core.cuentas.controlador;
 
-import com.banquito.core.cuentas.DTO.TransaccionesSolicitudDTO;
-import com.banquito.core.cuentas.DTO.TransaccionesRespuestaDTO;
-import com.banquito.core.cuentas.DTO.TransferenciasSolicitudDTO;
+import com.banquito.core.cuentas.dto.TransaccionesRespuestaDTO;
+import com.banquito.core.cuentas.dto.TransaccionesSolicitudDTO;
+import com.banquito.core.cuentas.dto.TransferenciasSolicitudDTO;
 import com.banquito.core.cuentas.excepcion.CrearEntidadExcepcion;
 import com.banquito.core.cuentas.excepcion.EntidadNoEncontradaExcepcion;
 import com.banquito.core.cuentas.mapper.TransaccionesMapper;

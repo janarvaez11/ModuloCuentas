@@ -1,7 +1,7 @@
 package com.banquito.core.cuentas.mapper; // Nuevo paquete para mappers
 
-import com.banquito.core.cuentas.DTO.TasaInteresSolicitudDTO;
-import com.banquito.core.cuentas.DTO.TasaInteresRespuestaDTO;
+import com.banquito.core.cuentas.dto.TasaInteresRespuestaDTO;
+import com.banquito.core.cuentas.dto.TasaInteresSolicitudDTO;
 import com.banquito.core.cuentas.modelo.TasasIntereses;
 
 public class TasaInteresMapper {

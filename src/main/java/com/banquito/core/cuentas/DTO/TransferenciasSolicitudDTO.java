@@ -1,4 +1,4 @@
-package com.banquito.core.cuentas.DTO;
+package com.banquito.core.cuentas.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
